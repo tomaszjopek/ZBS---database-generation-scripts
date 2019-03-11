@@ -8,7 +8,7 @@ import calendar
 
 def generate():
     template = Template(
-        "Insert into ORDERS (ORDER_ID,CUSTOMER_ID,STATUS,SALESMAN_ID,ORDER_DATE) values ($order_id, $customer_id, '$status', $salesman_id, '$order_date');")
+        "Insert into ORDERS (ORDER_ID,CUSTOMER_ID,STATUS,SALESMAN_ID,ORDER_DATE) values ($order_id, $customer_id, '$status', $salesman_id, $order_date);")
     inserts = []
     counter = 105
     status = ['Shipped', 'Pending', 'Canceled']
@@ -24,11 +24,13 @@ def generate():
 
     for warehouse in range(0, 5000):
         tmp_date = random_date(startDate, endDate)
-        tmp_month = calendar.month_abbr[tmp_date.month]
-        tmp_month = tmp_month.__str__()[:3]
+        # tmp_month = calendar.month_abbr[tmp_date.month]
+        # tmp_month = tmp_month.__str__()[:3]
+        tmp_month = tmp_date.month.__str__()
         tmp_day = tmp_date.day.__str__()
-        tmp_year = tmp_date.year.__str__()[-2:]
-        dates = tmp_day + '-' + tmp_month + '-' + tmp_year
+        tmp_year = tmp_date.year.__str__()
+
+        dates = "to_date('" + tmp_year + '-' + tmp_month + '-' + tmp_day + "', 'YYYY-MM-DD' )"
 
         inserts.append(template.substitute(order_id=counter, customer_id=random.randint(0, 319),
                                            status=status[random.randint(0, 2)], salesman_id=random.randint(0, 4907),
@@ -40,3 +42,6 @@ def generate():
     inserts_file = open('result_scripts/orders_inserts.sql', 'w', encoding='utf-8')
     inserts_file.writelines('\n'.join(distinct_inserts))
     inserts_file.close()
+
+
+generate()

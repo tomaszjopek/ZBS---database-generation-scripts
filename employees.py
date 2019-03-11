@@ -22,7 +22,7 @@ def generate():
 
     template = Template(
         "Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE,HIRE_DATE,MANAGER_ID,JOB_TITLE)"
-        " values ($EMPLOYEE_ID,'$FIRST_NAME','$LAST_NAME','$EMAIL','$PHONE','$HIRE_DATE',$MANAGER_ID,'$JOB_TITLE');")
+        " values ($EMPLOYEE_ID,'$FIRST_NAME','$LAST_NAME','$EMAIL','$PHONE',$HIRE_DATE,$MANAGER_ID,'$JOB_TITLE');")
     inserts = []
     counter = 200
     job_titles = ['Stock Clerk', 'Accountant', 'Sales Manager', 'Sales Representative', 'Shipping Clerk']
@@ -36,12 +36,13 @@ def generate():
             initial_managers.append(index)
 
         tmp_date = random_date(startDate, endDate)
-        tmp_month = calendar.month_abbr[tmp_date.month]
-        tmp_month = tmp_month.__str__()[:3]
+        # tmp_month = calendar.month_abbr[tmp_date.month]
+        # tmp_month = tmp_month.__str__()[:3]
+        tmp_month = tmp_date.month.__str__()
         tmp_day = tmp_date.day.__str__()
-        tmp_year = tmp_date.year.__str__()[-2:]
+        tmp_year = tmp_date.year.__str__()
 
-        dates = tmp_day + '-' + tmp_month + '-' + tmp_year
+        dates = "to_date('" + tmp_year + '-' + tmp_month + '-' + tmp_day + "', 'YYYY-MM-DD' )"
 
         inserts.append(template.substitute(EMPLOYEE_ID=index,
                                            FIRST_NAME=person.name().replace("'", "''"),
@@ -56,3 +57,6 @@ def generate():
     inserts_file = open('result_scripts/employees.sql', 'w', encoding='utf-8')
     inserts_file.writelines('\n'.join(inserts))
     inserts_file.close()
+
+
+generate()
