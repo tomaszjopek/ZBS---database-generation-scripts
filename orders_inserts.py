@@ -10,7 +10,7 @@ def generate():
     template = Template(
         "Insert into ORDERS (ORDER_ID,CUSTOMER_ID,STATUS,SALESMAN_ID,ORDER_DATE) values ($order_id, $customer_id, '$status', $salesman_id, $order_date);")
     inserts = []
-    counter = 105
+    counter = 1
     status = ['Shipped', 'Pending', 'Canceled']
 
     def random_date(start, end):
@@ -22,7 +22,7 @@ def generate():
     startDate = datetime.datetime(1995, 1, 1)
     endDate = datetime.datetime.now()
 
-    for warehouse in range(0, 5000):
+    for warehouse in range(0, 20000):
         tmp_date = random_date(startDate, endDate)
         # tmp_month = calendar.month_abbr[tmp_date.month]
         # tmp_month = tmp_month.__str__()[:3]
@@ -32,7 +32,7 @@ def generate():
 
         dates = "to_date('" + tmp_year + '-' + tmp_month + '-' + tmp_day + "', 'YYYY-MM-DD' )"
 
-        inserts.append(template.substitute(order_id=counter, customer_id=random.randint(0, 319),
+        inserts.append(template.substitute(order_id=counter, customer_id=random.randint(1, 14999),
                                            status=status[random.randint(0, 2)], salesman_id=random.randint(0, 4907),
                                            order_date=dates))
         counter = counter + 1

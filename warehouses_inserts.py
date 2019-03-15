@@ -4,9 +4,9 @@ from string import Template
 
 def generate():
     cities = []
-    counter = 24
+    counter = 1
     inserts = []
-    tmp_counter = 10
+    tmp_counter = 1
 
     template = Template(
         "Insert into WAREHOUSES (WAREHOUSE_ID,WAREHOUSE_NAME,LOCATION_ID) values ($id,'$name',$loc_id);")
@@ -26,3 +26,6 @@ def generate():
     inserts_file = open('result_scripts/warehouses.sql', 'w', encoding='utf-8')
     inserts_file.writelines('\n'.join(distinct_inserts))
     inserts_file.close()
+
+
+generate()

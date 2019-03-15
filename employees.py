@@ -30,7 +30,7 @@ def generate():
 
     person = Person('en')
 
-    for index in range(counter, 5000, 1):
+    for index in range(counter, 25000, 1):
         tmp_job_title = random.choice(job_titles)
         if str(tmp_job_title).__contains__('Manager'):
             initial_managers.append(index)

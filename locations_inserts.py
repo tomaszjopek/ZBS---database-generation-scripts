@@ -6,7 +6,7 @@ def generate():
     template = Template(
         "Insert into LOCATIONS (LOCATION_ID,ADDRESS,POSTAL_CODE,CITY,STATE,COUNTRY_ID,LAT,LNG,POPULATION) values ($id,null,null,'$city',null,'$country_code',$lat,$lng,$population);")
     inserts = []
-    counter = 24
+    counter = 1
 
     with open('csvs/worldcities.csv', newline='', encoding='utf-8') as csvfile:
         spamreader = csv.DictReader(csvfile)
@@ -21,3 +21,5 @@ def generate():
     inserts_file = open('result_scripts/locations.sql', 'w', encoding='utf-8')
     inserts_file.writelines('\n'.join(distinct_inserts))
     inserts_file.close()
+
+generate()
